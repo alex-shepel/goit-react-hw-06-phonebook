@@ -1,5 +1,4 @@
 import { setItems, addItem, removeItem, setFilter } from './actions';
-import { nanoid } from 'nanoid';
 import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
@@ -11,20 +10,13 @@ import { combineReducers } from 'redux';
 
 const itemsReducer = createReducer([], {
   [setItems]: (_, { payload }) => payload,
-  [addItem]: (state, { name, number }) => {
-    const newContact = {
-      name,
-      number,
-      id: nanoid(),
-    };
-    return [...state, newContact];
-  },
+  [addItem]: (state, { payload }) => [...state, payload],
   [removeItem]: (state, { payload }) =>
     state.filter(item => item.id !== payload),
 });
 
 const filterReducer = createReducer('', {
-  [setFilter]: (state, { payload }) => payload,
+  [setFilter]: (_, { payload }) => payload,
 });
 
 export default combineReducers({
