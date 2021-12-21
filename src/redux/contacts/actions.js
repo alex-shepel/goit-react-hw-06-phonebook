@@ -1,23 +1,6 @@
-import Types from './types';
+import { createAction } from '@reduxjs/toolkit';
 
-const setItems = items => ({
-  type: Types.SET_ITEMS,
-  payload: items,
-});
-
-const addItem = (name, number) => ({
-  type: Types.ADD_ITEM,
-  payload: { name, number },
-});
-
-const removeItem = id => ({
-  type: Types.REMOVE_ITEM,
-  payload: id,
-});
-
-const setFilter = filter => ({
-  type: Types.SET_FILTER,
-  payload: filter,
-});
-
-export { setItems, addItem, removeItem, setFilter };
+export const setItems = createAction('contacts/set_items');
+export const addItem = createAction('contacts/add_item');
+export const removeItem = createAction('contacts/remove_item');
+export const setFilter = createAction('contacts/set_filter');

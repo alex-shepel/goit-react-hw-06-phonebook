@@ -4,6 +4,7 @@ import { removeItem } from 'redux/contacts/actions';
 import { useEffect } from 'react';
 import * as storage from 'services/local-storage';
 import { setItems } from 'redux/contacts/actions';
+import { getFilter, getItems } from 'redux/contacts/selectors';
 
 const INITIAL_ITEMS = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -13,8 +14,9 @@ const INITIAL_ITEMS = [
 ];
 
 const ContactList = () => {
-  const items = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.contacts.filter);
+  const items = useSelector(getItems);
+  console.log('items -->', items);
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
   useEffect(() => {

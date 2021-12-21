@@ -2,6 +2,7 @@ import { useState } from 'react';
 import s from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from 'redux/contacts/actions';
+import { getItems } from 'redux/contacts/selectors';
 
 const Fields = {
   NAME: 'name',
@@ -11,7 +12,7 @@ const Fields = {
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const items = useSelector(state => state.contacts.items);
+  const items = useSelector(getItems);
   const dispatch = useDispatch();
 
   const normalize = name => {

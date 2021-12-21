@@ -1,6 +1,7 @@
-import Types from './types';
-import { combineReducers } from 'redux';
+import { setItems, addItem, removeItem, setFilter } from './actions';
 import { nanoid } from 'nanoid';
+import { createReducer } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 
 // reducer state template
 // {
@@ -8,40 +9,25 @@ import { nanoid } from 'nanoid';
 //   filter: '',
 // }
 
-const itemsReducer = (state = [], action) => {
-  switch (action.type) {
-    case Types.SET_ITEMS:
-      return action.payload;
+const itemsReducer = createReducer([], {
+  [setItems]: (_, { payload }) => payload,
+  [addItem]: (state, { name, number }) => {
+    const newContact = {
+      name,
+      number,
+      id: nanoid(),
+    };
+    return [...state, newContact];
+  },
+  [removeItem]: (state, { payload }) =>
+    state.filter(item => item.id !== payload),
+});
 
-    case Types.ADD_ITEM:
-      const newContact = {
-        name: action.payload.name,
-        number: action.payload.number,
-        id: nanoid(),
-      };
-      return [...state, newContact];
+const filterReducer = createReducer('', {
+  [setFilter]: (state, { payload }) => payload,
+});
 
-    case Types.REMOVE_ITEM:
-      return state.filter(item => item.id !== action.payload);
-
-    default:
-      return state;
-  }
-};
-
-const filterReducer = (state = '', action) => {
-  switch (action.type) {
-    case Types.SET_FILTER:
-      return action.payload;
-
-    default:
-      return state;
-  }
-};
-
-const contactsReducer = combineReducers({
+export default combineReducers({
   items: itemsReducer,
   filter: filterReducer,
 });
-
-export default contactsReducer;
