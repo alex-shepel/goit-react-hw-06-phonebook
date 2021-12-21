@@ -8,15 +8,17 @@ import { combineReducers } from 'redux';
 //   filter: '',
 // }
 
-const itemsReducer = createReducer([], {
-  [setItems]: (_, { payload }) => payload,
-  [addItem]: (state, { payload }) => [...state, payload],
-  [removeItem]: (state, { payload }) =>
-    state.filter(item => item.id !== payload),
+const itemsReducer = createReducer([], builder => {
+  builder
+    .addCase(setItems, (_, { payload }) => payload)
+    .addCase(addItem, (state, { payload }) => [...state, payload])
+    .addCase(removeItem, (state, { payload }) =>
+      state.filter(item => item.id !== payload),
+    );
 });
 
-const filterReducer = createReducer('', {
-  [setFilter]: (_, { payload }) => payload,
+const filterReducer = createReducer('', builder => {
+  builder.addCase(setFilter, (_, { payload }) => payload);
 });
 
 export default combineReducers({
